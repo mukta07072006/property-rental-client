@@ -6,7 +6,7 @@ export default async function AdminDashboardPage() {
   const session = await auth.api.getSession({ headers: await headers() })
     const userRole = session?.user?.role
     
-      if (userRole !== 'owner') {
+      if (userRole !== 'admin') {
         return <div>Access Denied. You do not have permission to view this page.</div>
       }
   return <AdminDashboard />
