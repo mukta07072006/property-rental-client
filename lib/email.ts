@@ -1,7 +1,8 @@
 // lib/email.ts
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 interface SendWelcomeEmailProps {
   to: string;
@@ -16,6 +17,11 @@ export async function sendWelcomeEmail({
   appName = "YourAppName",
   verificationUrl,
 }: SendWelcomeEmailProps) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY is not configured; skipping welcome email.');
+    return { success: false, skipped: true };
+  }
+
   try {
     const data = await resend.emails.send({
       from: `${appName} <onboarding@resend.dev>`,
