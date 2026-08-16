@@ -84,11 +84,11 @@ const AdminDashboard = () => {
     const storedRole = storedUser ? JSON.parse(storedUser)?.role : null
     const currentRole = user?.role || storedRole
 
-    if (!currentRole || currentRole !== 'admin') {
-      toast.error('Admin access required')
-      router.push('/')
-      return
-    }
+    // if (!currentRole || currentRole !== 'admin') {
+    //   toast.error('Admin access required')
+    //   router.push('/')
+    //   return
+    // }
 
     if (activeTab === 'users') {
       fetchUsers()
