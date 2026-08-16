@@ -46,6 +46,35 @@ const Register = () => {
       router.push('/')
     }
 
+    if (data) {
+      try {
+          const userRole = (data.user as any)?.role || 'tenant'
+          const userPayload = { ...(data.user as any), role: userRole }
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || process.env.SERVER_URL || 'http://localhost:5000'}/api/jwt`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: data.user.email,
+            role: userRole,
+          }),
+        })
+
+        const jwtData = await res.json()
+
+        if (jwtData.token) {
+          localStorage.setItem('token', jwtData.token)
+          toast.success('Login successful!')
+          router.push('/')
+        } else {
+          toast.error('Failed to issue access token')
+        }
+      } catch (err) {
+        console.error(err)
+        toast.error('Server error during token creation')
+      }
+    }
+
     setLoading(false)
   }
 
