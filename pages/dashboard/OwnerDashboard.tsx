@@ -263,10 +263,10 @@ const OwnerDashboard = () => {
                             </td>
                             <td className="py-3 text-right">
                               <div className="flex justify-end gap-1">
-                                <Button isIconOnly size="sm" variant="light" className="rounded-full text-gray-400 hover:text-slate-700">
+                                <Button isIconOnly size="sm" variant="ghost" className="rounded-full text-gray-400 hover:text-slate-700">
                                   <PencilToLine className="size-4" />
                                 </Button>
-                                <Button isIconOnly size="sm" variant="light" className="rounded-full text-red-500 hover:bg-red-50"
+                                <Button isIconOnly size="sm" variant="ghost" className="rounded-full text-red-500 hover:bg-red-50"
                                   onPress={() => handleDeleteProperty(p._id)}>
                                   <TrashBin className="size-4" />
                                 </Button>
@@ -415,7 +415,7 @@ const OwnerDashboard = () => {
                 </div>
 
                 <div className="px-6 py-4 border-t border-gray-100 flex justify-end gap-2">
-                  <Button type="button" variant="light" className="text-gray-600" onPress={() => setIsModalOpen(false)}>Cancel</Button>
+                  <Button type="button" variant="ghost" className="text-gray-600" onPress={() => setIsModalOpen(false)}>Cancel</Button>
                   <Button type="submit" className="bg-slate-900 text-white rounded-full px-5 hover:bg-slate-800">Create</Button>
                 </div>
               </form>

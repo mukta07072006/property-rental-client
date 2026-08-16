@@ -33,10 +33,8 @@ const Login = () => {
 
     if (data) {
       try {
-        const userRole = data.user.role || 'tenant'
-        const userPayload = { ...data.user, role: userRole }
-
-        localStorage.setItem('user', JSON.stringify(userPayload))
+          const userRole = (data.user as any)?.role || 'tenant'
+          const userPayload = { ...(data.user as any), role: userRole }
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || process.env.SERVER_URL || 'http://localhost:5000'}/api/jwt`, {
           method: 'POST',

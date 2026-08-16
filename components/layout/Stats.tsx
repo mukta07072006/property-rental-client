@@ -44,4 +44,5 @@ const Stats = () => {
   );
 }
 
+export const StatsGrid = Stats
 export default Stats;

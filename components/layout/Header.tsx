@@ -41,6 +41,8 @@ const Header: React.FC = () => {
     setUser(session?.user)
   }, [session])
 
+  const sessionUser = session?.user as any
+
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -92,7 +94,7 @@ const Header: React.FC = () => {
               /* Authenticated User Menu */
               <div className="relative hidden items-center gap-3 sm:flex">
                 <Link
-                  href={`/dashboard/${(session?.user?.role || 'tenant').toLowerCase()}`}
+                  href={`/dashboard/${((sessionUser?.role || 'tenant') as string).toLowerCase()}`}
                   className="flex items-center gap-1.5 rounded-full border border-black/10 bg-white/60 px-4 py-2 text-sm font-semibold text-[#161616] backdrop-blur-sm transition hover:bg-white hover:shadow-sm"
                 >
                   <LayoutDashboard size={15} />
@@ -229,7 +231,7 @@ const Header: React.FC = () => {
                   <User size={16} /> Profile
                 </Link>
                 <Link
-                  href={`/dashboard/${(session.user.role || 'tenant').toLowerCase()}`}
+                  href={`/dashboard/${((sessionUser?.role || 'tenant') as string).toLowerCase()}`}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-2 rounded-full bg-[#161616] px-5 py-2.5 text-center text-sm font-semibold text-white"
                 >

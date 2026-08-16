@@ -29,9 +29,9 @@ const Register = () => {
       email: formData.email,
       password: formData.password,
       image: formData.photo || undefined,
-      role: userRole,
+      ...( { role: userRole } as any ),
       callback: '/'
-    })
+    } as any)
 
     if (error) {
       toast.error(error.message || 'Registration failed')

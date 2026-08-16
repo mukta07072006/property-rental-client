@@ -9,12 +9,29 @@ import { authClient } from '@/lib/auth-client'
 
 const TenantDashboard = () => {
   const { data: session, isPending: sessionLoading } = authClient.useSession()
-  const user = session?.user
+  const user = session?.user as any
   const router = useRouter()
 
+  interface BookingItem {
+    _id: string
+    propertyTitle: string
+    createdAt?: string
+    amount: number
+    status: string
+    paymentStatus?: string
+  }
+
+  interface FavoriteItem {
+    _id: string
+    image?: string
+    title: string
+    location: string
+    price: number
+  }
+
   const [activeTab, setActiveTab] = useState('bookings')
-  const [bookings, setBookings] = useState([])
-  const [favorites, setFavorites] = useState([])
+  const [bookings, setBookings] = useState<BookingItem[]>([])
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([])
   const [loading, setLoading] = useState(true)
 
   // Guard: wait for session before fetching
@@ -206,7 +223,7 @@ const TenantDashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {bookings.map((booking) => (
+                      {bookings.map((booking: BookingItem) => (
                         <tr key={booking._id} className="border-b hover:bg-gray-50 transition-colors">
                           <td className="py-3 px-4">{booking.propertyTitle}</td>
                           <td className="py-3 px-4">
@@ -221,7 +238,7 @@ const TenantDashboard = () => {
                             </span>
                           </td>
                           <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPaymentStatusColor(booking.paymentStatus)}`}>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPaymentStatusColor(booking.paymentStatus || 'pending')}`}>
                               {booking.paymentStatus || 'N/A'}
                             </span>
                           </td>
@@ -253,7 +270,7 @@ const TenantDashboard = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {favorites.map((property) => (
+                  {favorites.map((property: FavoriteItem) => (
                     <div key={property._id} className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                       <img
                         src={property.image || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400'}

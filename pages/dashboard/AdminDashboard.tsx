@@ -36,11 +36,15 @@ type AdminBooking = {
 type AdminTransaction = {
   _id: string
   transactionId?: string
+  propertyId?: string
   propertyTitle?: string
   tenantName?: string
+  tenantEmail?: string
   ownerName?: string
+  ownerEmail?: string
   amount: number
-  date: string
+  date?: string
+  createdAt?: string
 }
 
 const AdminDashboard = () => {
@@ -520,7 +524,7 @@ const AdminDashboard = () => {
                           <td className="py-3 px-4">{transaction.tenantEmail || 'N/A'}</td>
                           <td className="py-3 px-4">{transaction.ownerEmail || 'N/A'}</td>
                           <td className="py-3 px-4 font-semibold">${transaction.amount}</td>
-                          <td className="py-3 px-4">{new Date(transaction.createdAt).toLocaleDateString()}</td>
+                          <td className="py-3 px-4">{transaction.createdAt ? new Date(transaction.createdAt).toLocaleDateString() : 'N/A'}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -570,7 +574,7 @@ const AdminDashboard = () => {
                     <textarea
                       required
                       className="input-field"
-                      rows="4"
+                      rows={4}
                       value={rejectionReason}
                       onChange={(e) => setRejectionReason(e.target.value)}
                       placeholder="Explain why this property is being rejected..."
